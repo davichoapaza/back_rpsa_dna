@@ -17,8 +17,9 @@ public class JwtTokenProvider {
 
     @Value("${jwt.secret:ClaveSecretaSuperSeguraYExtremadamenteLargaParaElFirmaDeJWT123456}")
     private String jwtSecret;
-
-    @Value("${jwt.expiration:28800000}")
+                             
+    @Value("${jwt.expiration:3600000}")
+   // @Value("${jwt.expiration:60000}") // 60.000 ms = 1 minuto
     private long jwtExpirationInMs;
 
     private Key getSigningKey() {

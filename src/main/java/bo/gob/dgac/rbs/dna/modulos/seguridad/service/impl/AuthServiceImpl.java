@@ -111,6 +111,9 @@ public class AuthServiceImpl implements AuthService {
         SesionToken sesion = sesionTokenRepository.findByRefreshTokenAndRevocadoFalse(request.getRefreshToken())
                 .orElseThrow(() -> new ResourceNotFoundException("El Refresh Token es inválido o ha sido revocado"));
 
+        
+        
+        
         // 2. Verificar si la sesión ya expiró
         if (sesion.getExpiraEn().isBefore(OffsetDateTime.now())) {
             sesion.setRevocado(true); // Se revoca la sesión vencida
