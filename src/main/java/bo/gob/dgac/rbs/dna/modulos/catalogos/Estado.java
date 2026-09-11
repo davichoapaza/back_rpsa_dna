@@ -1,5 +1,4 @@
-package bo.gob.dgac.rbs.dna.modulos.operaciones.model;
-
+package bo.gob.dgac.rbs.dna.modulos.catalogos;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,5 +23,5 @@ public class Estado {
     private String descripcion;
 
     @Column(name = "activo", nullable = false)
-    private Boolean activo;
+    private String activo;
 }

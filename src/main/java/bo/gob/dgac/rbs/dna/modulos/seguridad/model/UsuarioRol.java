@@ -5,9 +5,7 @@ import lombok.*;
 import java.time.OffsetDateTime;
 
 @Entity
-@Table(name = "usuario_roles", schema = "rbs_fusion1", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"usuario_id", "rol_id"})
-})
+@Table(name = "usuario_roles", schema = "rbs_fusion1")
 @Getter
 @Setter
 @NoArgsConstructor

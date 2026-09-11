@@ -1,9 +1,10 @@
 package bo.gob.dgac.rbs.dna.modulos.seguridad.model;
 
-import bo.gob.dgac.rbs.dna.modulos.catalogos.model.ParamEspecialidad;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.OffsetDateTime;
+
+import bo.gob.dgac.rbs.dna.modulos.catalogos.ParamEspecialidad;
 
 @Entity
 @Table(name = "persona_especialidades", schema = "rbs_fusion1")

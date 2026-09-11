@@ -1,4 +1,4 @@
-package bo.gob.dgac.rbs.dna.modulos.catalogos.model;
+package bo.gob.dgac.rbs.dna.modulos.catalogos;
 
 import jakarta.persistence.*;
 import lombok.*;
