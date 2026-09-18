@@ -9,13 +9,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import bo.gob.dgac.rbs.dna.common.exception.ResourceNotFoundException;
 import bo.gob.dgac.rbs.dna.modulos.catalogos.Estado;
+import bo.gob.dgac.rbs.dna.modulos.operaciones.dto.OrdenInspeccionRequestDto;
+import bo.gob.dgac.rbs.dna.modulos.operaciones.dto.OrdenInspeccionResponseDto;
+import bo.gob.dgac.rbs.dna.modulos.operaciones.maper.OrdenInspeccionMapper;
+import bo.gob.dgac.rbs.dna.modulos.operaciones.model.HistorialTransicion;
 import bo.gob.dgac.rbs.dna.modulos.operaciones.model.OrdenInspeccion;
 import bo.gob.dgac.rbs.dna.modulos.operaciones.repository.EstadoRepository;
+import bo.gob.dgac.rbs.dna.modulos.operaciones.repository.HistorialTransicionRepository;
 import bo.gob.dgac.rbs.dna.modulos.operaciones.repository.OrdenInspeccionRepository;
 import bo.gob.dgac.rbs.dna.modulos.operaciones.service.OrdenInspeccionService;
 import bo.gob.dgac.rbs.dna.modulos.seguridad.model.UsuarioRol;
-import lombok.RequiredArgsConstructor;
 import bo.gob.dgac.rbs.dna.modulos.seguridad.repository.UsuarioRolRepository;
+import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class OrdenInspeccionServiceImpl implements OrdenInspeccionService {
@@ -23,7 +28,53 @@ public class OrdenInspeccionServiceImpl implements OrdenInspeccionService {
     private final OrdenInspeccionRepository ordenRepository;
     private final EstadoRepository estadoRepository;
     private final UsuarioRolRepository usuarioRolRepository;
+    private final HistorialTransicionRepository historialRepository;
+    private final OrdenInspeccionMapper ordenMapper;
+    
+    @Override
+    @Transactional
+    public OrdenInspeccionResponseDto crearOrden(OrdenInspeccionRequestDto requestDto) {
+        // 1. Validar que no exista el código de orden
+        if (ordenRepository.existsByCodigoOrden(requestDto.getCodigoOrden())) {
+            throw new IllegalArgumentException("Ya existe una orden registrada con el código: " + requestDto.getCodigoOrden());
+        }
 
+        // 2. Obtener las entidades relacionadas
+        Estado estadoInicial = estadoRepository.findById(requestDto.getEstadoId())
+                .orElseThrow(() -> new ResourceNotFoundException("Estado no encontrado con ID: " + requestDto.getEstadoId()));
+
+        UsuarioRol director = usuarioRolRepository.findById(requestDto.getDirectorUsuarioRolId())
+                .orElseThrow(() -> new ResourceNotFoundException("UsuarioRol (Director) no encontrado con ID: " + requestDto.getDirectorUsuarioRolId()));
+
+        // 3. Crear y guardar la Orden de Inspección
+        OrdenInspeccion orden = OrdenInspeccion.builder()
+                .codigoOrden(requestDto.getCodigoOrden())
+                .titulo(requestDto.getTitulo())
+                .estado(estadoInicial)
+                .directorUsuarioRol(director)
+                .build();
+
+        OrdenInspeccion ordenGuardada = ordenRepository.save(orden);
+
+        // 4. Registrar la creación en el historial de transiciones
+        HistorialTransicion historialInicial = HistorialTransicion.builder()
+                .ordenInspeccion(ordenGuardada)
+                .estadoOrigen(null) // Es creación inicial
+                .estadoDestino(estadoInicial)
+                .accion("CREACION_ORDEN")
+                .usuarioRol(director)
+                .observaciones("Creación inicial de la orden de inspección por el Director")
+                .build();
+
+        historialRepository.save(historialInicial);
+
+        // 5. Retornar el DTO mapeado
+        return ordenMapper.toDto(ordenGuardada);
+    }
+    
+    
+    
+    
     @Override
     @Transactional
     public OrdenInspeccion crear(OrdenInspeccion orden, Long estadoId, Long directorUsuarioRolId) {

@@ -57,7 +57,9 @@ public class OrdenInspeccion {
 
     @PrePersist
     protected void onCreate() {
-        this.fechaCreacion = LocalDateTime.now();
+        LocalDateTime ahora = LocalDateTime.now();
+        this.fechaCreacion = ahora;
+        this.fechaActualizacion = ahora; 
     }
 
     @PreUpdate

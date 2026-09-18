@@ -12,6 +12,6 @@ import bo.gob.dgac.rbs.dna.modulos.catalogos.Estado;
 public interface EstadoRepository extends JpaRepository<Estado, Long> {
 
     Optional<Estado> findByNombre(String nombre);
-
+    
     boolean existsByNombre(String nombre);
 }

@@ -1,13 +1,18 @@
 package bo.gob.dgac.rbs.dna.modulos.operaciones.service;
 
-import bo.gob.dgac.rbs.dna.modulos.operaciones.model.OrdenInspeccion;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
+import bo.gob.dgac.rbs.dna.modulos.operaciones.dto.OrdenInspeccionRequestDto;
+import bo.gob.dgac.rbs.dna.modulos.operaciones.dto.OrdenInspeccionResponseDto;
+import bo.gob.dgac.rbs.dna.modulos.operaciones.model.OrdenInspeccion;
 
 public interface OrdenInspeccionService {
 
+	OrdenInspeccionResponseDto crearOrden(OrdenInspeccionRequestDto requestDto);
+	
     OrdenInspeccion crear(OrdenInspeccion orden, Long estadoId, Long directorUsuarioRolId);
 
     OrdenInspeccion actualizar(Long id, OrdenInspeccion ordenDetails, Long estadoId, Long directorUsuarioRolId);
