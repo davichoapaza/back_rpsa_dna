@@ -1,4 +1,4 @@
-package bo.gob.dgac.rbs.dna.modulos.operaciones.maper;
+/*package bo.gob.dgac.rbs.dna.modulos.operaciones.maper;
 
 import java.util.List;
 
@@ -36,3 +36,33 @@ public interface OrdenInspeccionMapper {
     @Mapping(target = "fechaActualizacion", ignore = true)
     void updateEntityFromDto(OrdenInspeccionRequestDto dto, @MappingTarget OrdenInspeccion entity);
 }
+*/
+package bo.gob.dgac.rbs.dna.modulos.operaciones.maper;
+
+import bo.gob.dgac.rbs.dna.config.MapStructConfig;
+import bo.gob.dgac.rbs.dna.modulos.operaciones.dto.OrdenInspeccionRequestDto;
+import bo.gob.dgac.rbs.dna.modulos.operaciones.dto.OrdenInspeccionResponseDto;
+import bo.gob.dgac.rbs.dna.modulos.operaciones.model.OrdenInspeccion;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
+import java.util.List;
+
+@Mapper(config = MapStructConfig.class)
+public interface OrdenInspeccionMapper {
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "estado", ignore = true)
+    @Mapping(target = "directorUsuarioRol", ignore = true)
+    @Mapping(target = "fechaCreacion", ignore = true)
+    @Mapping(target = "fechaActualizacion", ignore = true)
+    OrdenInspeccion toEntity(OrdenInspeccionRequestDto dto);
+
+    @Mapping(target = "estadoId", source = "estado.id")
+    @Mapping(target = "estadoNombre", source = "estado.nombre")
+    @Mapping(target = "directorUsuarioRolId", source = "directorUsuarioRol.id")
+    OrdenInspeccionResponseDto toDto(OrdenInspeccion entity);
+
+    List<OrdenInspeccionResponseDto> toDtoList(List<OrdenInspeccion> entities);
+}
+

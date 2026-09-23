@@ -1,4 +1,4 @@
-package bo.gob.dgac.rbs.dna.modulos.operaciones.dto;
+/*package bo.gob.dgac.rbs.dna.modulos.operaciones.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -24,3 +24,28 @@ public class OrdenInspeccionRequestDto {
     @NotNull(message = "El ID del Director (UsuarioRol) es obligatorio")
     private Long directorUsuarioRolId;
 }
+*/
+
+
+
+package bo.gob.dgac.rbs.dna.modulos.operaciones.dto;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class OrdenInspeccionRequestDto {
+
+    @NotBlank(message = "El código de orden es obligatorio")
+    private String codigoOrden;
+
+    @NotBlank(message = "El título es obligatorio")
+    private String titulo;
+
+    @NotNull(message = "El ID del Director es obligatorio")
+    private Long directorUsuarioRolId;
+}
+

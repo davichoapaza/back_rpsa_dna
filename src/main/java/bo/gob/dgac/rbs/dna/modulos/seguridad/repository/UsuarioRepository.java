@@ -1,15 +1,16 @@
 
 package bo.gob.dgac.rbs.dna.modulos.seguridad.repository;
 
-import bo.gob.dgac.rbs.dna.modulos.seguridad.dto.RolResponseDto;
-import bo.gob.dgac.rbs.dna.modulos.seguridad.model.Usuario;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Optional;
+import bo.gob.dgac.rbs.dna.modulos.seguridad.dto.RolResponseDto;
+import bo.gob.dgac.rbs.dna.modulos.seguridad.model.Usuario;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
@@ -23,6 +24,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
            "AND ur.activo = 'AC' " +
            "AND r.activo = 'AC'")
     List<RolResponseDto> findRolesActivosByUsuarioId(@Param("usuarioId") Long usuarioId);
+    
+    
 }
 
 
