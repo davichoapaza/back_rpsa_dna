@@ -17,8 +17,8 @@ public interface OrdenInspeccionRepository extends JpaRepository<OrdenInspeccion
     
     
     @Query("SELECT new bo.gob.dgac.rbs.dna.modulos.operaciones.dto.OrdenInspeccionEstadoResponseDto(" +
-            "oi.codigoOrden, e.nombre, oi.fechaCreacion) " +
-            "FROM OrdenInspeccion oi JOIN oi.estado e")
+            "oi.id,oi.codigoOrden, e.nombre, oi.fechaCreacion) " +
+            "FROM OrdenInspeccion oi JOIN oi.estado e ORDER BY oi.id DESC")
      List<OrdenInspeccionEstadoResponseDto> obtenerResumenOrdenesConEstado();
     
 }

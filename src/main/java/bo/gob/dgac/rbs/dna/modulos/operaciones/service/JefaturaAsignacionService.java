@@ -2,12 +2,14 @@ package bo.gob.dgac.rbs.dna.modulos.operaciones.service;
 
 
 
-import bo.gob.dgac.rbs.dna.modulos.operaciones.dto.JefaturaAsignacionRequestDto;
-import bo.gob.dgac.rbs.dna.modulos.operaciones.dto.JefaturaAsignacionResponseDto;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
+import bo.gob.dgac.rbs.dna.modulos.operaciones.dto.AsignacionesJefeResponseDto;
+import bo.gob.dgac.rbs.dna.modulos.operaciones.dto.JefaturaAsignacionRequestDto;
+import bo.gob.dgac.rbs.dna.modulos.operaciones.dto.JefaturaAsignacionResponseDto;
 
 public interface JefaturaAsignacionService {
 
@@ -16,7 +18,9 @@ public interface JefaturaAsignacionService {
     JefaturaAsignacionResponseDto actualizarEstado(Long id, Long nuevoEstadoId);
 
     JefaturaAsignacionResponseDto obtenerPorId(Long id);
-
+    
+   List<AsignacionesJefeResponseDto> obtenerAsignacionesJefeYRol(Long usuarioId,Long rolId );
+   
     List<JefaturaAsignacionResponseDto> obtenerPorOrdenId(Long ordenId);
 
     Page<JefaturaAsignacionResponseDto> obtenerPorJefe(Long jefeUsuarioRolId, Pageable pageable);

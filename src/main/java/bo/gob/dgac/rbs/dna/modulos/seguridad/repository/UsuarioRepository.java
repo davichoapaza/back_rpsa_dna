@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import bo.gob.dgac.rbs.dna.modulos.seguridad.dto.RolResponseDto;
+import bo.gob.dgac.rbs.dna.modulos.seguridad.dto.UsuarioPersonaResponseDto;
 import bo.gob.dgac.rbs.dna.modulos.seguridad.model.Usuario;
 
 @Repository
@@ -24,9 +25,50 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
            "AND ur.activo = 'AC' " +
            "AND r.activo = 'AC'")
     List<RolResponseDto> findRolesActivosByUsuarioId(@Param("usuarioId") Long usuarioId);
+     
+    /*
+    SELECT u.id,p.nombres,p.primer_apellido, p.segundo_apellido, p.ci
+FROM usuario_roles ur 
+JOIN roles r ON ur.rol_id = r.id
+JOIN usuarios u ON ur.usuario_id=u.id
+JOIN personas p ON u.persona_id =p.id
+WHERE p.activo='AC' AND  r.id=2;
+	 */
+    @Query("SELECT new bo.gob.dgac.rbs.dna.modulos.seguridad.dto.UsuarioPersonaResponseDto(" +
+    	       "u.id, p.nombres, p.primerApellido, p.segundoApellido, p.ci) " +
+    	       "FROM UsuarioRol ur " +
+    	       "JOIN ur.usuario u " +
+    	       "JOIN u.persona p " +
+    	       "JOIN ur.rol r " +
+    	       "WHERE p.activo = 'AC' AND r.id = :rolId")
+    List<UsuarioPersonaResponseDto> obtenerUsuariosPorRol(@Param("rolId") Long rolId);
+    
+    
+    
+    
+    
+    
+    
     
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*

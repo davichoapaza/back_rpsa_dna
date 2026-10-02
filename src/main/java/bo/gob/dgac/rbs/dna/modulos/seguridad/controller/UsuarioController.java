@@ -2,8 +2,12 @@ package bo.gob.dgac.rbs.dna.modulos.seguridad.controller;
 
 
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import bo.gob.dgac.rbs.dna.modulos.seguridad.dto.CambiarPasswordRequestDto;
 import bo.gob.dgac.rbs.dna.modulos.seguridad.dto.RespuestaDto;
+import bo.gob.dgac.rbs.dna.modulos.seguridad.dto.UsuarioPersonaResponseDto;
 import bo.gob.dgac.rbs.dna.modulos.seguridad.service.UsuarioService;
 import jakarta.validation.Valid;
 
@@ -40,4 +45,19 @@ public class UsuarioController {
             return ResponseEntity.internalServerError().body(RespuestaDto.error("Error al actualizar la contraseña: " + e.getMessage()));
         }
     }
+    
+    
+    @GetMapping("/rol/{rolId}")
+    public ResponseEntity<RespuestaDto<List<UsuarioPersonaResponseDto>>> obtenerUsuariosPorRol(
+            @PathVariable Long rolId) {
+        try {
+            List<UsuarioPersonaResponseDto> usuarios = usuarioService.obtenerUsuariosPorRol(rolId);
+            return ResponseEntity.ok(RespuestaDto.exito("Lista de usuarios obtenida exitosamente", usuarios));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError()
+                    .body(RespuestaDto.error("Error al obtener usuarios por rol: " + e.getMessage()));
+        }
+    }
+    
+    
 }

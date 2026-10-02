@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import bo.gob.dgac.rbs.dna.common.exception.ResourceNotFoundException;
 import bo.gob.dgac.rbs.dna.modulos.catalogos.Estado;
+import bo.gob.dgac.rbs.dna.modulos.operaciones.dto.AsignacionesJefeResponseDto;
 import bo.gob.dgac.rbs.dna.modulos.operaciones.dto.JefaturaAsignacionRequestDto;
 import bo.gob.dgac.rbs.dna.modulos.operaciones.dto.JefaturaAsignacionResponseDto;
 import bo.gob.dgac.rbs.dna.modulos.operaciones.maper.JefaturaAsignacionMapper;
@@ -98,4 +99,20 @@ public class JefaturaAsignacionServiceImpl implements JefaturaAsignacionService 
                 .orElseThrow(() -> new ResourceNotFoundException("Asignación de jefatura no encontrada con ID: " + id));
         jefaturaAsignacionRepository.delete(asignacion);
     }
+
+/*	@Override
+	public List<AsignacionesJefeResponseDto> obtenerAsignacionesJefeYRol(Long usuarioId, Long rolId) {
+		 JefaturaAsignacion asignacion = jefaturaAsignacionRepository.obtenerAsignacionesJefeYRol(usuarioId, rolId)
+				 orElseThrow(() -> new ResourceNotFoundException("Asignación de jefatura no encontrada con ID: " + id));
+		 
+		
+		return asignacion;
+	}*/
+    
+    @Override
+    public List<AsignacionesJefeResponseDto> obtenerAsignacionesJefeYRol(Long usuarioId, Long rolId) {
+        return jefaturaAsignacionRepository.obtenerAsignacionesJefeYRol(usuarioId, rolId);
+    }
+
+
 }

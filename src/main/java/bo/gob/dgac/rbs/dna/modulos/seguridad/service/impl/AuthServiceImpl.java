@@ -39,7 +39,7 @@ public class AuthServiceImpl implements AuthService {
         // 1. Validar usuario
         Usuario usuario = usuarioRepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new ResourceNotFoundException("Credenciales inválidas"));
-
+             
         if (Boolean.TRUE.equals(usuario.getBloqueado())) {
             throw new IllegalStateException("El usuario se encuentra bloqueado");
         }
@@ -47,7 +47,7 @@ public class AuthServiceImpl implements AuthService {
         if (!passwordEncoder.matches(request.getPassword(), usuario.getPasswordHash())) {
             throw new IllegalArgumentException("Credenciales inválidas");
         }
-
+    
         // 2. Actualizar último login
         usuario.setUltimoLogin(OffsetDateTime.now());
         usuarioRepository.save(usuario);
@@ -65,8 +65,8 @@ public class AuthServiceImpl implements AuthService {
         String refreshToken = tokenProvider.generarRefreshToken();
         
         
-        
-
+               
+ 
         // 5. REGISTRAR EN LA TABLA sesiones_tokens
         SesionToken sesion = SesionToken.builder()
                 .usuario(usuario)

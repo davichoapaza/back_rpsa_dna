@@ -15,6 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrdenInspeccionEstadoResponseDto {
+    private Long id;
 	private String codigoOrden;
     private String nombreEstado;
     private LocalDateTime fechaCreacion;

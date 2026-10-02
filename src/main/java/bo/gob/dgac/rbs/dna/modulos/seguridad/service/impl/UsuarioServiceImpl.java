@@ -1,11 +1,14 @@
 package bo.gob.dgac.rbs.dna.modulos.seguridad.service.impl;
 
 
+import java.util.List;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import bo.gob.dgac.rbs.dna.modulos.seguridad.dto.CambiarPasswordRequestDto;
+import bo.gob.dgac.rbs.dna.modulos.seguridad.dto.UsuarioPersonaResponseDto;
 import bo.gob.dgac.rbs.dna.modulos.seguridad.model.Usuario;
 import bo.gob.dgac.rbs.dna.modulos.seguridad.repository.UsuarioRepository;
 import bo.gob.dgac.rbs.dna.modulos.seguridad.service.UsuarioService;
@@ -37,4 +40,16 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuario.setPasswordHash(passwordEncriptada);
         usuarioRepository.save(usuario);
     }
+
+	
+	@Override
+    @Transactional(readOnly = true)
+    public List<UsuarioPersonaResponseDto> obtenerUsuariosPorRol(Long rolId) {
+        return usuarioRepository.obtenerUsuariosPorRol(rolId);
+    }
+	
+	
+	
+	
+	
 }
