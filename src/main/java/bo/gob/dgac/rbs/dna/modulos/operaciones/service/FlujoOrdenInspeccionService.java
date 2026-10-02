@@ -1,5 +1,10 @@
 package bo.gob.dgac.rbs.dna.modulos.operaciones.service;
 
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import bo.gob.dgac.rbs.dna.modulos.operaciones.dto.OrdenInspeccionRequestDto;
 import bo.gob.dgac.rbs.dna.modulos.operaciones.dto.OrdenInspeccionResponseDto;
 import bo.gob.dgac.rbs.dna.modulos.operaciones.dto.TransicionFlujoRequestDto;
@@ -32,4 +37,11 @@ public interface FlujoOrdenInspeccionService {
 
     // Paso 8: Director aprueba el cierre de la orden en APROBADO (ID: 5)
     OrdenInspeccionResponseDto aprobarPorDirector(TransicionFlujoRequestDto dto);
+    
+    
+
+    
+    
+    
+    
 }

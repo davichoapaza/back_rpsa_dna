@@ -25,9 +25,6 @@ public class OrdenInspeccionRequestDto {
     private Long directorUsuarioRolId;
 }
 */
-
-
-
 package bo.gob.dgac.rbs.dna.modulos.operaciones.dto;
 
 import jakarta.validation.constraints.NotBlank;

@@ -2,17 +2,23 @@ package bo.gob.dgac.rbs.dna.modulos.operaciones.controller;
 
 
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import bo.gob.dgac.rbs.dna.modulos.operaciones.dto.OrdenInspeccionEstadoResponseDto;
 import bo.gob.dgac.rbs.dna.modulos.operaciones.dto.OrdenInspeccionRequestDto;
 import bo.gob.dgac.rbs.dna.modulos.operaciones.dto.OrdenInspeccionResponseDto;
+import bo.gob.dgac.rbs.dna.modulos.operaciones.dto.RespuestaDto;
 import bo.gob.dgac.rbs.dna.modulos.operaciones.dto.TransicionFlujoRequestDto;
 import bo.gob.dgac.rbs.dna.modulos.operaciones.service.FlujoOrdenInspeccionService;
+import bo.gob.dgac.rbs.dna.modulos.operaciones.service.OrdenInspeccionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -22,13 +28,22 @@ import lombok.RequiredArgsConstructor;
 public class FlujoOrdenInspeccionController {
 
     private final FlujoOrdenInspeccionService flujoService;
-
+    private final OrdenInspeccionService  ordenService;            
     // 1. Director crea borrador
     @PostMapping("/crear-borrador")
     public ResponseEntity<OrdenInspeccionResponseDto> crearBorrador(
             @Valid @RequestBody OrdenInspeccionRequestDto requestDto) {
         return new ResponseEntity<>(flujoService.crearBorrador(requestDto), HttpStatus.CREATED);
     }
+    
+    @GetMapping("/ordenes-inspeccion")
+    public ResponseEntity<RespuestaDto<List<OrdenInspeccionEstadoResponseDto>>> obtenerResumenOrdenes() {
+        List<OrdenInspeccionEstadoResponseDto> lista = ordenService.obtenerResumenOrdenes();
+        return ResponseEntity.ok(new RespuestaDto<>(true, "Listado de órdenes obtenido exitosamente", lista));
+    }
+   
+    
+    
 
     // 2. Director instruye y deriva a los jefes
     @PostMapping("/instruir-y-derivar")

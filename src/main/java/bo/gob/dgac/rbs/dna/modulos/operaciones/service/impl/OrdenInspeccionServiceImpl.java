@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import bo.gob.dgac.rbs.dna.common.exception.ResourceNotFoundException;
 import bo.gob.dgac.rbs.dna.modulos.catalogos.Estado;
+import bo.gob.dgac.rbs.dna.modulos.operaciones.dto.OrdenInspeccionEstadoResponseDto;
 import bo.gob.dgac.rbs.dna.modulos.operaciones.dto.OrdenInspeccionRequestDto;
 import bo.gob.dgac.rbs.dna.modulos.operaciones.dto.OrdenInspeccionResponseDto;
 import bo.gob.dgac.rbs.dna.modulos.operaciones.dto.TransicionFlujoRequestDto;
@@ -321,7 +322,16 @@ public class OrdenInspeccionServiceImpl implements OrdenInspeccionService {
         return ordenRepository.findAll(pageable)
                 .map(ordenMapper::toDto);
     }
-}
+    
+    @Override
+    @Transactional(readOnly = true)
+    public List<OrdenInspeccionEstadoResponseDto> obtenerResumenOrdenes() {
+        return ordenRepository.obtenerResumenOrdenesConEstado();
+        
+    }
+    
+    
+}    
 
 
 /*package bo.gob.dgac.rbs.dna.modulos.operaciones.service.impl;
