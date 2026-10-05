@@ -22,8 +22,18 @@ public class ParamUnidad {
     @Column(nullable = false, length = 100)
     private String nombre;
 
-    @Column(length = 50)
-    private String direccion;
+    /*@Column(length = 50)
+    private String direccion;*/
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+        name = "direccion_id", 
+        nullable = false, 
+        foreignKey = @ForeignKey(name = "param_unidades_param_direcciones_fk")
+    )
+    private ParamDirecciones direccion;
+    
+    
 
     @Column(name = "ansp_oad", length = 50)
     private String anspOad;

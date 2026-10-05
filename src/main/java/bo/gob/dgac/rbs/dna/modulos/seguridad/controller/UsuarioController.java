@@ -46,12 +46,12 @@ public class UsuarioController {
         }
     }
     
-    
-    @GetMapping("/rol/{rolId}")
+
+    @GetMapping("/rol/{rolId}/especialidad/{idEspecialidad}/area/{idArea}")
     public ResponseEntity<RespuestaDto<List<UsuarioPersonaResponseDto>>> obtenerUsuariosPorRol(
-            @PathVariable Long rolId) {
+            @PathVariable Long rolId,@PathVariable Long idEspecialidad,@PathVariable Long idArea) {
         try {
-            List<UsuarioPersonaResponseDto> usuarios = usuarioService.obtenerUsuariosPorRol(rolId);
+            List<UsuarioPersonaResponseDto> usuarios = usuarioService.obtenerUsuariosPorRolEspecialidadArea(rolId, idEspecialidad, idArea);
             return ResponseEntity.ok(RespuestaDto.exito("Lista de usuarios obtenida exitosamente", usuarios));
         } catch (Exception e) {
             return ResponseEntity.internalServerError()

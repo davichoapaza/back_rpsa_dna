@@ -44,8 +44,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 	
 	@Override
     @Transactional(readOnly = true)
-    public List<UsuarioPersonaResponseDto> obtenerUsuariosPorRol(Long rolId) {
-        return usuarioRepository.obtenerUsuariosPorRol(rolId);
+    public List<UsuarioPersonaResponseDto> obtenerUsuariosPorRolEspecialidadArea(Long rolId,Long idEspecialidad, Long idArea) {
+        return usuarioRepository.obtenerUsuariosPorRolEspecialidadArea(rolId,idEspecialidad,idArea);
     }
 	
 	

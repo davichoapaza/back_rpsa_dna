@@ -26,31 +26,22 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
            "AND r.activo = 'AC'")
     List<RolResponseDto> findRolesActivosByUsuarioId(@Param("usuarioId") Long usuarioId);
      
-    /*
-    SELECT u.id,p.nombres,p.primer_apellido, p.segundo_apellido, p.ci
-FROM usuario_roles ur 
-JOIN roles r ON ur.rol_id = r.id
-JOIN usuarios u ON ur.usuario_id=u.id
-JOIN personas p ON u.persona_id =p.id
-WHERE p.activo='AC' AND  r.id=2;
-	 */
-    @Query("SELECT new bo.gob.dgac.rbs.dna.modulos.seguridad.dto.UsuarioPersonaResponseDto(" +
-    	       "u.id, p.nombres, p.primerApellido, p.segundoApellido, p.ci) " +
-    	       "FROM UsuarioRol ur " +
-    	       "JOIN ur.usuario u " +
-    	       "JOIN u.persona p " +
-    	       "JOIN ur.rol r " +
-    	       "WHERE p.activo = 'AC' AND r.id = :rolId")
-    List<UsuarioPersonaResponseDto> obtenerUsuariosPorRol(@Param("rolId") Long rolId);
     
+    // OBTINE LOS USUARIO DE UN DETERMINADO ROL, ESPECALIDAD Y DE UN AREA Y SI
+    // ESPECIALIDAD ES CERO RETORNA TODOS DE ESA AREA. ajustar
+    @Query("SELECT new bo.gob.dgac.rbs.dna.modulos.seguridad.dto.UsuarioPersonaResponseDto(ur.id, p.nombres,p.primerApellido, p.segundoApellido, p.ci)\n"
+    		+ "			    FROM UsuarioRol ur\n"
+    		+ "			    JOIN ur.usuario u\n"
+    		+ "			    JOIN u.persona p\n"
+    		+ "			    JOIN PersonaEspecialidad pe ON pe.persona.id = p.id\n"
+    		+ "			    JOIN pe.especialidad e\n"
+    		+ "			    JOIN e.paramUnidad pu\n"
+    		+ "			    JOIN pu.direccion di\n"
+    		+ "			    WHERE ur.rol.id = :rolId  AND di.id=:idArea AND (:idEspecialidad = 0 OR e.id= :idEspecialidad)"
+    		+ "			    ORDER BY ur.id DESC")
+    List<UsuarioPersonaResponseDto> obtenerUsuariosPorRolEspecialidadArea(@Param("rolId") Long rolId, @Param("idEspecialidad") Long idEspecialidad,@Param("idArea") Long idArea);
     
-    
-    
-    
-    
-    
-    
-    
+ 
 }
 
 

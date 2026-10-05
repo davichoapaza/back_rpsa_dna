@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UsuarioPersonaResponseDto {
  private Long id;
- private String nombre;
+ private String nombres;
  private String primerApellido;
  private String segundoApellido;
  private String ci;
