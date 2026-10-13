@@ -12,7 +12,13 @@ public class ParamIndicadoresLugar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
+    @Column(name="codigo_oaci", length=10)
+    private String codigoOaci;
+    
+    @Column(name="ciudad", length=50)
+    private String ciudad;
+    
     @Column(name = "nombre_aerodromo", length = 200, nullable = false)
     private String nombreAerodromo;
 
