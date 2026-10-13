@@ -17,6 +17,7 @@ import lombok.Setter;
 @Data
 public class AsignacionesJefeResponseDto {
   private Long id;
+  private String especialidad;
   private String codigoOrden;
    private String nombre;
   private OffsetDateTime fechaAsignacion;

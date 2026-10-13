@@ -16,7 +16,7 @@ import bo.gob.dgac.rbs.dna.modulos.operaciones.model.JefaturaAsignacion;
 
 @Repository
 public interface JefaturaAsignacionRepository extends JpaRepository<JefaturaAsignacion, Long> {
-
+/*
 	@Query("SELECT new bo.gob.dgac.rbs.dna.modulos.operaciones.dto.AsignacionesJefeResponseDto(" +
 		       "ja.id, oi.codigoOrden, e.nombre, ja.fechaAsignacion) " +
 		       "FROM JefaturaAsignacion ja " +
@@ -29,8 +29,27 @@ public interface JefaturaAsignacionRepository extends JpaRepository<JefaturaAsig
     List<AsignacionesJefeResponseDto> obtenerAsignacionesJefeYRol(
 		    	@Param("usuarioId") Long usuarioId, 
 		    	@Param("rolId") Long rolId
-		        );
+		        );*/
 
+	
+	@Query("SELECT new bo.gob.dgac.rbs.dna.modulos.operaciones.dto.AsignacionesJefeResponseDto(" +
+		       "ja.id,pu.codigo as especialidad,oi.codigoOrden, e.nombre, ja.fechaAsignacion) " +
+		       "FROM JefaturaAsignacion ja " +
+		       "JOIN ja.ordenInspeccion oi " +
+		       "JOIN ja.estado e " +
+		       "JOIN ja.jefeUsuarioRol ur " +
+		       "JOIN ur.usuario u " +
+		       "JOIN PersonaEspecialidad pe ON pe.persona= u.persona " +
+		       "JOIN pe.especialidad ep " +
+		       "JOIN ep.paramUnidad pu " +
+		       "WHERE u.id = :usuarioId AND ur.rol.id = :rolId " +
+		       "ORDER BY ja.id DESC")
+				List<AsignacionesJefeResponseDto> obtenerAsignacionesJefeYRol(
+		    	@Param("usuarioId") Long usuarioId, 
+		    	@Param("rolId") Long rolId
+		        );
+	
+	
 	
 	@EntityGraph(attributePaths = {"ordenInspeccion", "estado", "jefeUsuarioRol"})
     List<JefaturaAsignacion> findByOrdenInspeccionId(Long ordenId);

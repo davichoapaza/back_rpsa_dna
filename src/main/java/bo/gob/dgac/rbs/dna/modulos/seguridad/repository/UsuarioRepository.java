@@ -13,6 +13,8 @@ import bo.gob.dgac.rbs.dna.modulos.seguridad.dto.RolResponseDto;
 import bo.gob.dgac.rbs.dna.modulos.seguridad.dto.UsuarioPersonaResponseDto;
 import bo.gob.dgac.rbs.dna.modulos.seguridad.model.Usuario;
 
+
+
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
@@ -40,7 +42,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     		+ "			    WHERE ur.rol.id = :rolId  AND di.id=:idArea AND (:idEspecialidad = 0 OR e.id= :idEspecialidad)"
     		+ "			    ORDER BY ur.id DESC")
     List<UsuarioPersonaResponseDto> obtenerUsuariosPorRolEspecialidadArea(@Param("rolId") Long rolId, @Param("idEspecialidad") Long idEspecialidad,@Param("idArea") Long idArea);
-    
  
 }
 

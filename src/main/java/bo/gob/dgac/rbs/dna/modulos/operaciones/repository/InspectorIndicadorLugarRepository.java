@@ -18,4 +18,5 @@ public interface InspectorIndicadorLugarRepository extends JpaRepository<Inspect
     @Modifying
     @Query("DELETE FROM InspectorIndicadorLugar i WHERE i.inspectorVigilanciaId = :inspectorVigilanciaId")
     void deleteByInspectorVigilanciaId(@Param("inspectorVigilanciaId") Long inspectorVigilanciaId);
+
 }

@@ -1,4 +1,4 @@
-package bo.gob.dgac.rbs.dna.modulos.catalogos;
+package bo.gob.dgac.rbs.dna.modulos.catalogos.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,3 +26,7 @@ public class ParamEspecialidad {
     @JoinColumn(name = "para_unidad_id")
     private ParamUnidad paramUnidad;
 }
+
+
+
+

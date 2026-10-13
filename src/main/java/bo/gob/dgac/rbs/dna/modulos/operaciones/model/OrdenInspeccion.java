@@ -3,7 +3,7 @@ package bo.gob.dgac.rbs.dna.modulos.operaciones.model;
 
 import java.time.LocalDateTime;
 
-import bo.gob.dgac.rbs.dna.modulos.catalogos.Estado;
+import bo.gob.dgac.rbs.dna.modulos.catalogos.model.Estado;
 import bo.gob.dgac.rbs.dna.modulos.seguridad.model.UsuarioRol;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -2,7 +2,7 @@ package bo.gob.dgac.rbs.dna.modulos.seguridad.model;
 
 import java.time.OffsetDateTime;
 
-import bo.gob.dgac.rbs.dna.modulos.catalogos.ParamEspecialidad;
+import bo.gob.dgac.rbs.dna.modulos.catalogos.model.ParamEspecialidad;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

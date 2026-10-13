@@ -35,7 +35,7 @@ public class InspectorIndicadorLugarController {
         return ResponseEntity.ok(response);
     }
 
-    // Guardar/Actualizar la configuración completa de la orden (todos los inspectores del modal)
+    //Guardar/Actualizar la configuración completa de la orden (todos los inspectores del modal)
     @PostMapping("/asignar-masivo")
     public ResponseEntity<Map<String, Object>> asignarIndicadoresMasivo(@RequestBody List<AsignarIndicadoresRequestDto> listaRequest) {
         service.guardarIndicadoresMasivo(listaRequest);
@@ -45,8 +45,10 @@ public class InspectorIndicadorLugarController {
         response.put("mensaje", "Configuración de indicadores guardada con éxito.");
         return ResponseEntity.ok(response);
     }
+    
+    
 
-    // Consultar los IDs de indicadores asignados a un inspector específico
+    //Consultar los IDs de indicadores asignados a un inspector específico
     @GetMapping("/inspector/{inspectorVigilanciaId}")
     public ResponseEntity<List<Long>> obtenerPorInspector(@PathVariable Long inspectorVigilanciaId) {
         List<Long> indicadoresIds = service.obtenerIndicadoresPorInspector(inspectorVigilanciaId);

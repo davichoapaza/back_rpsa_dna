@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import bo.gob.dgac.rbs.dna.common.exception.ResourceNotFoundException;
-import bo.gob.dgac.rbs.dna.modulos.catalogos.Estado;
+import bo.gob.dgac.rbs.dna.modulos.catalogos.model.Estado;
 import bo.gob.dgac.rbs.dna.modulos.operaciones.dto.OrdenInspeccionRequestDto;
 import bo.gob.dgac.rbs.dna.modulos.operaciones.dto.OrdenInspeccionResponseDto;
 import bo.gob.dgac.rbs.dna.modulos.operaciones.dto.TransicionFlujoRequestDto;
