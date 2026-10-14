@@ -30,12 +30,12 @@ public class InspectorIndicadorLugarServiceImpl implements InspectorIndicadorLug
 		  Long usuarioRolId = itemDto.getInspectorUsuarioRolId();
 		  List<Long> indicadoresIds= itemDto.getIndicadoresSeleccionados();
 
-		  InspectorVigilancia vigilancia = inspectorVigilanciaRepository
-		          .findByInspectorUsuarioRolId(usuarioRolId)
-		          .orElse(null);
+           //InspectorVigilancia vigilancia = inspectorVigilanciaRepository
+		 //         .findByInspectorUsuarioRolId(usuarioRolId)
+		  //        .orElse(null);
 
 
-		  if (vigilancia == null) {
+		 // if (vigilancia == null) {
 		      InspectorVigilancia nueva = new InspectorVigilancia();
 		      
 		      UsuarioRol usuarioRol = new UsuarioRol();
@@ -50,11 +50,11 @@ public class InspectorIndicadorLugarServiceImpl implements InspectorIndicadorLug
 		      estado.setId(request.getEstadoId() != null ? request.getEstadoId() : 1L);
 		      nueva.setEstado(estado);
 
-		      vigilancia = inspectorVigilanciaRepository.save(nueva);
-		  }
+		      //vigilancia = inspectorVigilanciaRepository.save(nueva);
+		 // }
 		  
-          Long vigilanciaId = vigilancia.getId();
-          
+          //Long vigilanciaId = vigilancia.getId();
+		      Long vigilanciaId =   inspectorVigilanciaRepository.save(nueva).getId();
           //PASO 2: Limpiar los indicadores/lugares anteriores asignados a esta vigilancia
           //indicadorLugarRepository.deleteByInspectorVigilanciaId(vigilanciaId);
        // PASO 3: Guardar los nuevos lugares seleccionados en la tabla hija (inspector_indicadores_lugar)
