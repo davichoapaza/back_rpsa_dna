@@ -1,9 +1,58 @@
 package bo.gob.dgac.rbs.dna.modulos.operaciones.controller;
+
+
+
+
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import bo.gob.dgac.rbs.dna.modulos.operaciones.dto.GuardarAsignacionInspectoresRequestDto;
+import bo.gob.dgac.rbs.dna.modulos.operaciones.service.InspectorIndicadorLugarService;
+
+
+
+
+@RestController
+@RequestMapping("/api/v1/inspector-indicadores")
+@CrossOrigin(origins = "*")
+public class InspectorIndicadorLugarController {
+
+    @Autowired
+    private InspectorIndicadorLugarService service;
+            
+
+    @PostMapping("/guardar")
+    public ResponseEntity<?> guardarAsignaciones(@RequestBody GuardarAsignacionInspectoresRequestDto request) {
+        try {
+            service.procesarAsignacionMasiva(request);
+            return ResponseEntity.ok(Map.of(
+                "exito", true, 
+                "mensaje", "Vigilancias e indicadores de lugar guardados correctamente"
+            ));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of(
+                "exito", false, 
+                "mensaje", "Error al procesar asignaciones: " + e.getMessage()
+            ));
+        }
+    }
+}
+
+
 /*
 public class InspectorIndicadorLugarController {
 
 }*/
 
+
+/*
 import bo.gob.dgac.rbs.dna.modulos.operaciones.dto.AsignarIndicadoresRequestDto;
 import bo.gob.dgac.rbs.dna.modulos.operaciones.service.InspectorIndicadorLugarService;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +76,7 @@ public class InspectorIndicadorLugarController {
     // Guardar/Actualizar la configuración de indicadores para un inspector
     @PostMapping("/asignar")
     public ResponseEntity<Map<String, Object>> asignarIndicadores(@RequestBody AsignarIndicadoresRequestDto request) {
-        service.guardarIndicadoresInspector(request);
+        service.procesarAsignacionMasiva(request);
         
         Map<String, Object> response = new HashMap<>();
         response.put("exito", true);
@@ -55,3 +104,4 @@ public class InspectorIndicadorLugarController {
         return ResponseEntity.ok(indicadoresIds);
     }
 }
+*/
