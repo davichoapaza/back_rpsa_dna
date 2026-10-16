@@ -15,10 +15,11 @@ public class LoginResponseDto {
 
     private Long id;
     private String username;
+    private Long  idUnidad;
     private String nombreCompleto;
     private List<RolResponseDto> roles;
-    private String token;          // JWT Access Token (duración corta)
-    private String refreshToken;   // Refresh Token guardado en la BD
+    private String token;         
+    private String refreshToken;  
     
     @Builder.Default
     private String tokenType = "Bearer";

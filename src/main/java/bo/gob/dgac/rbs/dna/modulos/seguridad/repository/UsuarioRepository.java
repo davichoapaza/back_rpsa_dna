@@ -27,11 +27,14 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
            "AND ur.activo = 'AC' " +
            "AND r.activo = 'AC'")
     List<RolResponseDto> findRolesActivosByUsuarioId(@Param("usuarioId") Long usuarioId);
-     
+    
+    
+    
+    
     
     // OBTINE LOS USUARIO DE UN DETERMINADO ROL, ESPECALIDAD Y DE UN AREA Y SI
     // ESPECIALIDAD ES CERO RETORNA TODOS DE ESA AREA. ajustar
-    @Query("SELECT new bo.gob.dgac.rbs.dna.modulos.seguridad.dto.UsuarioPersonaResponseDto(ur.id, p.nombres,p.primerApellido, p.segundoApellido, p.ci)\n"
+    @Query("SELECT new bo.gob.dgac.rbs.dna.modulos.seguridad.dto.UsuarioPersonaResponseDto(ur.id, p.nombres,p.primerApellido, p.segundoApellido, p.ci, pu.codigo, e.nombre)\n"
     		+ "			    FROM UsuarioRol ur\n"
     		+ "			    JOIN ur.usuario u\n"
     		+ "			    JOIN u.persona p\n"
@@ -39,10 +42,37 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     		+ "			    JOIN pe.especialidad e\n"
     		+ "			    JOIN e.paramUnidad pu\n"
     		+ "			    JOIN pu.direccion di\n"
-    		+ "			    WHERE ur.rol.id = :rolId  AND di.id=:idArea AND (:idEspecialidad = 0 OR e.id= :idEspecialidad)"
+    		+ "			    WHERE ur.rol.id = :rolId  AND di.id=:idArea AND (:idEspecialidad = 0 OR e.id= :idEspecialidad) AND pu.id =:idUnidad"
     		+ "			    ORDER BY ur.id DESC")
-    List<UsuarioPersonaResponseDto> obtenerUsuariosPorRolEspecialidadArea(@Param("rolId") Long rolId, @Param("idEspecialidad") Long idEspecialidad,@Param("idArea") Long idArea);
+    List<UsuarioPersonaResponseDto> obtenerUsuariosPorRolEspecialidadArea(@Param("rolId") Long rolId, @Param("idEspecialidad") Long idEspecialidad,
+    		@Param("idArea") Long idArea, @Param("idUnidad") Long idUnidad);
  
+    
+    
+    // devuele a que unidad pertenerce un determinado id y si fuera director devuelv la unidad a la que pertenece DSO o DNA
+    /*@Query("SELECT CASE WHEN pu.id IS NULL THEN pu.direccionId ELSE pu.id END " +
+            "FROM Usuario u " +
+            "JOIN UsuarioRol ur  ON u.id=ur.usuario" +
+            "JOIN u.persona p " +
+            "JOIN PersonaEspecialidad pe ON pe.persona = p.id " +
+            "JOIN pe.especialidad pe2 " +
+            "JOIN pe2.paramUnidad pu " +
+            "WHERE u.id = :usuarioId " +
+            "GROUP BY pu.id, pu.direccionId")
+       Long obtenerIdUnidadODireccionPorUsuario(@Param("usuarioId") Long usuarioId);*/
+     //List<Long> obtenerIdUnidadODireccionPorUsuario(@Param("usuarioId") Long usuarioId);
+    
+    @Query("SELECT CASE WHEN pu.id IS NULL THEN pu.direccion ELSE pu.id END" +
+            " FROM Usuario u " +
+    		" JOIN UsuarioRol ur ON ur.usuario=u"+
+            " JOIN u.persona p"+
+    		" JOIN PersonaEspecialidad pe ON pe.persona = p"+
+            " JOIN pe.especialidad pe2"+
+    		" JOIN pe2.paramUnidad pu"+
+            " WHERE u.id = :usuarioId"+
+    		" GROUP BY pu.id,pu.direccion")
+       Long obtenerIdUnidadODireccionPorUsuario(@Param("usuarioId") Long usuarioId);
+    
 }
 
 

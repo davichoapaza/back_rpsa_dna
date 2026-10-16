@@ -40,6 +40,8 @@ public class AuthServiceImpl implements AuthService {
         Usuario usuario = usuarioRepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new ResourceNotFoundException("Credenciales inválidas"));
              
+        System.out.println("************USUAIRO***********:"+ usuario.getId());
+        
         if (Boolean.TRUE.equals(usuario.getBloqueado())) {
             throw new IllegalStateException("El usuario se encuentra bloqueado");
         }
@@ -85,9 +87,12 @@ public class AuthServiceImpl implements AuthService {
                 persona.getPrimerApellido(),
                 persona.getSegundoApellido() != null ? persona.getSegundoApellido() : "").trim();
 
+        
+        
         return LoginResponseDto.builder()
                 .id(usuario.getId())
                 .username(usuario.getUsername())
+                .idUnidad(usuarioRepository.obtenerIdUnidadODireccionPorUsuario(usuario.getId()))
                 .nombreCompleto(nombreCompleto)
                 .roles(roles)
                 .token(accessToken)

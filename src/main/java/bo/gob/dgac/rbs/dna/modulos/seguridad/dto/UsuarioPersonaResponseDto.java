@@ -15,5 +15,7 @@ public class UsuarioPersonaResponseDto {
  private String primerApellido;
  private String segundoApellido;
  private String ci;
+ private String codigo;
+ private String nombre;
   	
 }
