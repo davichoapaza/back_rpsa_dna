@@ -28,10 +28,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
            "AND r.activo = 'AC'")
     List<RolResponseDto> findRolesActivosByUsuarioId(@Param("usuarioId") Long usuarioId);
     
-    
-    
-    
-    
     // OBTINE LOS USUARIO DE UN DETERMINADO ROL, ESPECALIDAD Y DE UN AREA Y SI
     // ESPECIALIDAD ES CERO RETORNA TODOS DE ESA AREA. ajustar
     @Query("SELECT new bo.gob.dgac.rbs.dna.modulos.seguridad.dto.UsuarioPersonaResponseDto(ur.id, p.nombres,p.primerApellido, p.segundoApellido, p.ci, pu.codigo, e.nombre)\n"
@@ -47,10 +43,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     List<UsuarioPersonaResponseDto> obtenerUsuariosPorRolEspecialidadArea(@Param("rolId") Long rolId, @Param("idEspecialidad") Long idEspecialidad,
     		@Param("idArea") Long idArea, @Param("idUnidad") Long idUnidad);
  
-    
-    
-    // devuele a que unidad pertenerce un determinado id y si fuera director devuelv la unidad a la que pertenece DSO o DNA
-    /*@Query("SELECT CASE WHEN pu.id IS NULL THEN pu.direccionId ELSE pu.id END " +
+    //devuele a que unidad pertenerce un determinado id y si fuera director devuelve la direccion a la que pertenece DSO o DNA
+    /*@Query("SELECT CASE WHEN pu.id IS NULL THEN pu.direccion ELSE pu.id END " +
             "FROM Usuario u " +
             "JOIN UsuarioRol ur  ON u.id=ur.usuario" +
             "JOIN u.persona p " +
@@ -58,11 +52,11 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
             "JOIN pe.especialidad pe2 " +
             "JOIN pe2.paramUnidad pu " +
             "WHERE u.id = :usuarioId " +
-            "GROUP BY pu.id, pu.direccionId")
+            "GROUP BY pu.id, pu.direccion")
        Long obtenerIdUnidadODireccionPorUsuario(@Param("usuarioId") Long usuarioId);*/
      //List<Long> obtenerIdUnidadODireccionPorUsuario(@Param("usuarioId") Long usuarioId);
-    
-    @Query("SELECT CASE WHEN pu.id IS NULL THEN pu.direccion ELSE pu.id END" +
+     
+     @Query("SELECT COALESCE(pu.id, pu.direccion)  " +
             " FROM Usuario u " +
     		" JOIN UsuarioRol ur ON ur.usuario=u"+
             " JOIN u.persona p"+
@@ -70,9 +64,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
             " JOIN pe.especialidad pe2"+
     		" JOIN pe2.paramUnidad pu"+
             " WHERE u.id = :usuarioId"+
-    		" GROUP BY pu.id,pu.direccion")
+    		" GROUP BY pu.id, pu.direccion")
        Long obtenerIdUnidadODireccionPorUsuario(@Param("usuarioId") Long usuarioId);
-    
 }
 
 

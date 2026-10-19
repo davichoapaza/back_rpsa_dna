@@ -86,8 +86,6 @@ public class AuthServiceImpl implements AuthService {
                 persona.getNombres(),
                 persona.getPrimerApellido(),
                 persona.getSegundoApellido() != null ? persona.getSegundoApellido() : "").trim();
-
-        
         
         return LoginResponseDto.builder()
                 .id(usuario.getId())
