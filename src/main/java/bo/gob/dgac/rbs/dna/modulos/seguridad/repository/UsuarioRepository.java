@@ -38,7 +38,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     		+ "			    JOIN pe.especialidad e\n"
     		+ "			    JOIN e.paramUnidad pu\n"
     		+ "			    JOIN pu.direccion di\n"
-    		+ "			    WHERE ur.rol.id = :rolId  AND di.id=:idArea AND (:idEspecialidad = 0 OR e.id= :idEspecialidad) AND pu.id =:idUnidad"
+    		+ "			    WHERE ur.rol.id = :rolId  AND di.id=:idArea AND (:idEspecialidad = 0 OR e.id= :idEspecialidad) AND (:idUnidad=0 OR pu.id =:idUnidad)"
     		+ "			    ORDER BY ur.id DESC")
     List<UsuarioPersonaResponseDto> obtenerUsuariosPorRolEspecialidadArea(@Param("rolId") Long rolId, @Param("idEspecialidad") Long idEspecialidad,
     		@Param("idArea") Long idArea, @Param("idUnidad") Long idUnidad);
