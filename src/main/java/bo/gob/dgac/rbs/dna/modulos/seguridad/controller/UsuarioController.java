@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +19,8 @@ import bo.gob.dgac.rbs.dna.modulos.seguridad.dto.RespuestaDto;
 import bo.gob.dgac.rbs.dna.modulos.seguridad.dto.UsuarioPersonaResponseDto;
 import bo.gob.dgac.rbs.dna.modulos.seguridad.service.UsuarioService;
 import jakarta.validation.Valid;
+import lombok.Getter;
+import lombok.Setter;
 
 @RestController
 @RequestMapping("/api/v1/seguridad/usuarios")
@@ -59,5 +62,20 @@ public class UsuarioController {
         }
     }
     
+    @Getter
+    @Setter
+    public static class EstadoRequest {
+        private Boolean bloqueado;
+    }
+    
+ // PATCH: /api/v1/usuarios/{usuarioId}/estado
+    @PatchMapping("/{usuarioId}/estado")
+    public ResponseEntity<Void> cambiarEstadoUsuario(
+            @PathVariable Long usuarioId, // <-- Cambiado a Long
+            @RequestBody EstadoRequest request) {
+
+        usuarioService.cambiarEstadoUsuario(usuarioId, request.getBloqueado());
+        return ResponseEntity.ok().build();
+    }
     
 }

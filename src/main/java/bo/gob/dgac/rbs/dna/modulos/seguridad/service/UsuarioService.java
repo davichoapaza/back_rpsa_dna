@@ -10,6 +10,8 @@ import bo.gob.dgac.rbs.dna.modulos.seguridad.dto.UsuarioPersonaResponseDto;
 public interface UsuarioService {
     void cambiarPassword(String username, CambiarPasswordRequestDto dto);
     
-       
+    
+    void cambiarEstadoUsuario(Long usuarioId, Boolean bloqueado);
+    
     List<UsuarioPersonaResponseDto> obtenerUsuariosPorRolEspecialidadArea(Long rolId,Long idEspecialidad, Long idArea,Long idUnidad);       
 }

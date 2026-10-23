@@ -1,13 +1,10 @@
-package bo.gob.dgac.rbs;
+/*package bo.gob.dgac.rbs;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import bo.gob.dgac.rbs.dna.modulos.seguridad.dto.UsuarioPersonaResponseDto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
@@ -19,52 +16,7 @@ public class Operaciones {
 
 	@Test
 	void prubas() {
-
-
-		
-		//"WHERE ur.rol.id = :rolId AND pe2.id = :especialidadId")   
-/*		String jpql = """
-			    SELECT new bo.gob.dgac.rbs.dna.modulos.seguridad.dto.UsuarioPersonaResponseDto(ur.id, p.nombres,p.primerApellido, p.segundoApellido, p.ci)
-			    FROM UsuarioRol ur
-			    JOIN ur.usuario u
-			    JOIN u.persona p
-			    JOIN PersonaEspecialidad pe ON pe.persona.id = p.id
-			    JOIN pe.especialidad e
-			    WHERE ur.rol.id = 3 and e.id=1
-			    ORDER BY ur.id DESC
-						    """;*/
-		
-		String jpql = """
-			    SELECT new bo.gob.dgac.rbs.dna.modulos.seguridad.dto.UsuarioPersonaResponseDto(ur.id, p.nombres,p.primerApellido, p.segundoApellido, p.ci)
-			    FROM UsuarioRol ur
-			    JOIN ur.usuario u
-			    JOIN u.persona p
-			    JOIN PersonaEspecialidad pe ON pe.persona.id = p.id
-			    JOIN pe.especialidad e
-			    JOIN e.paramUnidad pu
-			    JOIN pu.direccion di
-			    WHERE ur.rol.id = 3 and e.id=1 AND (:idArea = 0 OR di.id=:idArea)
-			    ORDER BY ur.id DESC
-						    """;
-		
-		List<UsuarioPersonaResponseDto> resultados =
-	            entityManager
-	                .createQuery(jpql, UsuarioPersonaResponseDto.class)
-	                //.setParameter("id")
-	                .getResultList();
-	       resultados.forEach(System.out::println);
-		
-		
-		
-		
-		
-
-		
-		
-		
-		
 	}
-	
 	@Test
 	void testObtenerIdUnidadODireccion() {
 	    String jpql = """
@@ -86,5 +38,70 @@ public class Operaciones {
 	    // Validar el resultado en tu test
 	    assertNotNull(resultado);
 	}
-	
+} */
+
+package bo.gob.dgac.rbs;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import bo.gob.dgac.rbs.dna.modulos.seguridad.dto.PersonalDetalleResponseDto;
+import bo.gob.dgac.rbs.dna.modulos.seguridad.repository.PersonaEspecialidadesRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+
+@SpringBootTest(classes = DnaRbsBackendApplication.class)
+public class Operaciones {
+
+    @PersistenceContext
+    private EntityManager entityManager;
+    
+    @Autowired
+    private PersonaEspecialidadesRepository repository;
+
+    // --- AQUÍ CREAS TU MÉTODO DE PRUEBA ---
+    // SELECT NEW bo.gob.dgac.rbs.dna.modulos.seguridad.dto.PersonalDetalleResponseDto(" +
+    //"pd.codigo, paru.codigo, pae.nombre, per.id, per.nombres," +
+    //"per.primerApellido, per.segundoApellido, per.ci, u.bloqueado, u.id) " +	
+    //
+    @Test
+    void pruebafuncion() {
+       /* String jpql = """
+            SELECT new bo.gob.dgac.rbs.dna.modulos.seguridad.dto.PersonalDetalleResponseDto(
+                pd.codigo, paru.codigo, pae.nombre, per.id, per.nombres,per.primerApellido, per.segundoApellido, per.ci, u.bloqueado, u.id
+            )
+            FROM PersonaEspecialidad pes 
+            JOIN pes.especialidad pae 
+            JOIN pae.paramUnidad paru 
+            JOIN paru.direccion pd 
+            JOIN pes.persona per 
+            JOIN Usuario u ON u.persona = per
+        """;
+
+        try {
+            List<PersonalDetalleResponseDto> resultados = entityManager
+                    .createQuery(jpql, PersonalDetalleResponseDto.class)
+                    .getResultList();
+            System.out.println("=== TAMAÑO DE LA LISTA DTO: " + resultados.size() + " ===");
+            if (!resultados.isEmpty()) {
+                System.out.println("Dirección obtenida: " + resultados.get(0).getDireccionCodigo());
+            }
+            assertNotNull(resultados);
+            assertEquals(1, resultados.size());
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("La consulta con DTO falló: " + e.getMessage());
+        }*/
+    	
+    	
+    	
+    	
+    }
 }

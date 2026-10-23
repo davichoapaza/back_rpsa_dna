@@ -18,6 +18,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
+    
 
     public UsuarioServiceImpl(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
@@ -50,6 +51,14 @@ public class UsuarioServiceImpl implements UsuarioService {
 	
 	
 	
-	
+	@Override
+	@Transactional
+	public void cambiarEstadoUsuario(Long usuarioId, Boolean bloqueado) {
+	    Usuario usuario = usuarioRepository.findById(usuarioId)
+	            .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + usuarioId));
+
+	    usuario.setBloqueado(bloqueado);
+	    usuarioRepository.save(usuario);
+	}
 	
 }
